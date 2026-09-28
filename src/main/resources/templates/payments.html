@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>WageTrack - Payments</title>
 
     <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 
 <body>
 
@@ -18,38 +21,91 @@
     <aside class="sidebar">
 
         <div class="logo">
-            <div class="logo-box">W</div>
+
+            <div class="logo-box">
+                W
+            </div>
 
             <div class="logo-text">
-                <h2>WageTrack</h2>
-                <span>Workforce Tracker</span>
+
+                <h2>
+                    WageTrack
+                </h2>
+
+                <span id="portalText">
+                    Workforce Tracker
+                </span>
+
             </div>
+
         </div>
+
 
         <nav class="navigation">
 
-            <a href="/dashboard" class="nav-link">
+            <!-- Dashboard -->
+            <a
+                href="/dashboard"
+                class="nav-link"
+                id="dashboardLink">
+
                 Dashboard
+
             </a>
 
-            <a href="/workers" class="nav-link">
+
+            <!-- Workers -->
+            <a
+                href="/workers"
+                class="nav-link"
+                id="workersLink">
+
                 Workers
+
             </a>
 
-            <a href="/worksites" class="nav-link">
+
+            <!-- Worksites -->
+            <a
+                href="/worksites"
+                class="nav-link"
+                id="worksitesLink">
+
                 Worksites
+
             </a>
 
-            <a href="/attendance" class="nav-link">
+
+            <!-- Attendance -->
+            <a
+                href="/attendance"
+                class="nav-link"
+                id="attendanceLink">
+
                 Attendance
+
             </a>
 
-            <a href="/weekly-summary" class="nav-link">
+
+            <!-- Weekly Summary -->
+            <a
+                href="/weekly-summary"
+                class="nav-link"
+                id="weeklySummaryLink">
+
                 Weekly Summary
+
             </a>
 
-            <a href="/payments" class="nav-link active">
+
+            <!-- Payments -->
+            <a
+                href="/payments"
+                class="nav-link active"
+                id="paymentsLink">
+
                 Payments
+
             </a>
 
         </nav>
@@ -57,16 +113,26 @@
     </aside>
 
 
+
     <!-- Main Content -->
     <main class="main-content">
+
 
         <!-- Top Bar -->
         <header class="topbar">
 
             <div class="page-heading">
-                <h1>Payments</h1>
-                <p>Record and manage worker payments</p>
+
+                <h1 id="pageTitle">
+                    Payments
+                </h1>
+
+                <p id="pageDescription">
+                    Record and manage worker payments
+                </p>
+
             </div>
+
 
             <div class="profile">
 
@@ -75,8 +141,15 @@
                 </div>
 
                 <div class="profile-info">
-                    <strong>Admin</strong>
-                    <span>Administrator</span>
+
+                    <strong id="profileName">
+                        Admin
+                    </strong>
+
+                    <span id="profileRole">
+                        Administrator
+                    </span>
+
                 </div>
 
             </div>
@@ -84,30 +157,44 @@
         </header>
 
 
+
         <!-- Page Content -->
         <section class="dashboard-content">
+
 
             <!-- Page Header -->
             <div class="workers-page-header">
 
                 <div>
-                    <h2>Payment Management</h2>
-                    <p>Track actual payments made to workers.</p>
+
+                    <h2 id="managementTitle">
+                        Payment Management
+                    </h2>
+
+                    <p id="managementDescription">
+                        Track actual payments made to workers.
+                    </p>
+
                 </div>
+
 
                 <!-- RECORD PAYMENT BUTTON -->
                 <button
                     type="button"
                     class="primary-button"
                     id="addPaymentBtn">
+
                     + Record Payment
+
                 </button>
 
             </div>
 
 
+
             <!-- Statistics -->
             <div class="stats-grid">
+
 
                 <div class="stat-card">
 
@@ -118,7 +205,9 @@
                     <div
                         class="stat-value"
                         id="totalPayments">
+
                         0
+
                     </div>
 
                     <div class="stat-description">
@@ -126,6 +215,7 @@
                     </div>
 
                 </div>
+
 
 
                 <div class="stat-card">
@@ -137,7 +227,9 @@
                     <div
                         class="stat-value"
                         id="totalPaid">
+
                         ₹0
+
                     </div>
 
                     <div class="stat-description">
@@ -149,24 +241,37 @@
             </div>
 
 
+
             <!-- Payment Table -->
             <div class="card">
+
 
                 <div class="card-header">
 
                     <div>
-                        <h2>Payment Records</h2>
-                        <p>All actual payments</p>
+
+                        <h2 id="recordsTitle">
+                            Payment Records
+                        </h2>
+
+                        <p id="recordsDescription">
+                            All actual payments
+                        </p>
+
                     </div>
+
 
                     <button
                         type="button"
                         class="secondary-button"
                         id="refreshPaymentsBtn">
+
                         Refresh
+
                     </button>
 
                 </div>
+
 
 
                 <div class="table-container">
@@ -176,15 +281,23 @@
                         <thead>
 
                             <tr>
+
                                 <th>ID</th>
+
                                 <th>Worker</th>
+
                                 <th>Payment Date</th>
+
                                 <th>Amount</th>
+
                                 <th>Status</th>
+
                                 <th>Actions</th>
+
                             </tr>
 
                         </thead>
+
 
                         <tbody id="paymentsTableBody">
                         </tbody>
@@ -194,12 +307,15 @@
                 </div>
 
 
+
                 <div
                     id="paymentsEmpty"
                     class="empty-state"
                     style="display: none;">
 
-                    <h3>No payment records found</h3>
+                    <h3>
+                        No payment records found
+                    </h3>
 
                     <p>
                         Record a payment to create the first entry.
@@ -216,7 +332,9 @@
 </div>
 
 
+
 <!-- Record Payment Modal -->
+
 <div
     id="paymentModal"
     class="modal-overlay"
@@ -224,30 +342,44 @@
 
     <div class="modal">
 
+
         <div class="modal-header">
 
             <div>
-                <h2>Record Payment</h2>
-                <p>Enter the payment made to a worker.</p>
+
+                <h2>
+                    Record Payment
+                </h2>
+
+                <p>
+                    Enter the payment made to a worker.
+                </p>
+
             </div>
+
 
             <button
                 type="button"
                 class="close-button"
                 id="closePaymentModal">
+
                 ×
+
             </button>
 
         </div>
 
 
+
         <form id="paymentForm">
+
 
             <div class="form-group">
 
                 <label for="paymentWorker">
                     Worker
                 </label>
+
 
                 <select
                     id="paymentWorker"
@@ -262,11 +394,13 @@
             </div>
 
 
+
             <div class="form-group">
 
                 <label for="paymentDate">
                     Payment Date
                 </label>
+
 
                 <input
                     type="date"
@@ -276,11 +410,13 @@
             </div>
 
 
+
             <div class="form-group">
 
                 <label for="paymentAmount">
                     Amount
                 </label>
+
 
                 <input
                     type="number"
@@ -293,25 +429,33 @@
             </div>
 
 
+
             <div
                 id="paymentMessage"
                 class="form-message">
             </div>
 
 
+
             <div class="modal-actions">
+
 
                 <button
                     type="button"
                     class="secondary-button"
                     id="cancelPaymentBtn">
+
                     Cancel
+
                 </button>
+
 
                 <button
                     type="submit"
                     class="primary-button">
+
                     Save Payment
+
                 </button>
 
             </div>
@@ -321,6 +465,191 @@
     </div>
 
 </div>
+
+
+
+<script>
+
+/* =========================================
+   Worker Page Navigation
+   ========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const isWorkerPage =
+            window.location.pathname === "/worker-payments";
+
+
+        if (isWorkerPage) {
+
+
+            /* Portal Name */
+
+            document.getElementById(
+                "portalText"
+            ).textContent =
+                "Worker Portal";
+
+
+            /* Dashboard */
+
+            document.getElementById(
+                "dashboardLink"
+            ).href =
+                "/worker-dashboard";
+
+            document.getElementById(
+                "dashboardLink"
+            ).textContent =
+                "Dashboard";
+
+
+            /* Hide Admin Menu */
+
+            document.getElementById(
+                "workersLink"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "worksitesLink"
+            ).style.display =
+                "none";
+
+
+            /* Worker Attendance */
+
+            document.getElementById(
+                "attendanceLink"
+            ).href =
+                "/worker-attendance";
+
+            document.getElementById(
+                "attendanceLink"
+            ).textContent =
+                "My Attendance";
+
+
+            /* Worker Weekly Summary */
+
+            document.getElementById(
+                "weeklySummaryLink"
+            ).href =
+                "/worker-weekly-summary";
+
+            document.getElementById(
+                "weeklySummaryLink"
+            ).textContent =
+                "Wage Summary";
+
+
+            /* Worker Payments */
+
+            document.getElementById(
+                "paymentsLink"
+            ).href =
+                "/worker-payments";
+
+            document.getElementById(
+                "paymentsLink"
+            ).textContent =
+                "My Payments";
+
+
+            /* Top Bar */
+
+            document.getElementById(
+                "pageTitle"
+            ).textContent =
+                "My Payments";
+
+
+            document.getElementById(
+                "pageDescription"
+            ).textContent =
+                "View your payment history";
+
+
+            /* Profile */
+
+            document.getElementById(
+                "profileName"
+            ).textContent =
+                "Worker";
+
+
+            document.getElementById(
+                "profileRole"
+            ).textContent =
+                "Worker";
+
+
+            /* Page Header */
+
+            document.getElementById(
+                "managementTitle"
+            ).textContent =
+                "My Payment History";
+
+
+            document.getElementById(
+                "managementDescription"
+            ).textContent =
+                "View your payment records and total paid amount.";
+
+
+            /* Table */
+
+            document.getElementById(
+                "recordsTitle"
+            ).textContent =
+                "My Payments";
+
+
+            document.getElementById(
+                "recordsDescription"
+            ).textContent =
+                "Your payment records";
+
+
+            /* Hide Record Payment */
+
+            const addPaymentBtn =
+                document.getElementById(
+                    "addPaymentBtn"
+                );
+
+            if (addPaymentBtn) {
+
+                addPaymentBtn.style.display =
+                    "none";
+            }
+
+
+            /* Change Empty Message */
+
+            const emptyMessage =
+                document.querySelector(
+                    "#paymentsEmpty p"
+                );
+
+            if (emptyMessage) {
+
+                emptyMessage.textContent =
+                    "No payment records available.";
+            }
+
+        }
+
+    }
+
+);
+
+</script>
+
 
 
 <script src="/js/payments.js"></script>

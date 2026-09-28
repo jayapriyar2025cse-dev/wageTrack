@@ -55,9 +55,33 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("attendanceMessage");
 
 
+    // =====================================
+    // Check Worker Page
+    // =====================================
+
+    const isWorkerPage =
+        window.location.pathname === "/worker-attendance";
+
+
     let attendanceRecords = [];
     let workers = [];
     let worksites = [];
+
+
+    // =====================================
+    // Worker Page - Hide Admin Controls
+    // =====================================
+
+    if (isWorkerPage) {
+
+        if (addAttendanceBtn) {
+            addAttendanceBtn.style.display = "none";
+        }
+
+        if (attendanceModal) {
+            attendanceModal.style.display = "none";
+        }
+    }
 
 
     // =========================
@@ -65,6 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     async function loadWorkers() {
+
+        // Worker page doesn't need workers list
+        if (isWorkerPage) {
+            return;
+        }
 
         const response =
             await fetch("/api/workers");
@@ -86,6 +115,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function loadWorksites() {
 
+        // Worker page doesn't need worksites list
+        if (isWorkerPage) {
+            return;
+        }
+
         const response =
             await fetch("/api/worksites");
 
@@ -105,6 +139,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     function populateWorkerDropdown() {
+
+        if (!attendanceWorker) {
+            return;
+        }
 
         attendanceWorker.innerHTML = `
             <option value="">
@@ -135,6 +173,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // =========================
 
     function populateWorksiteDropdown() {
+
+        if (!attendanceWorksite) {
+            return;
+        }
 
         attendanceWorksite.innerHTML = `
             <option value="">
@@ -168,21 +210,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
 
+            let url =
+                "/api/attendance";
+
+
+            // Worker:
+            // own attendance only
+            if (isWorkerPage) {
+
+                url =
+                    "/api/attendance/my";
+            }
+
+
             const response =
-                await fetch("/api/attendance");
+                await fetch(url);
+
 
             if (!response.ok) {
+
                 throw new Error(
                     "Unable to load attendance"
                 );
             }
 
+
             attendanceRecords =
                 await response.json();
+
 
             renderAttendance(
                 attendanceRecords
             );
+
 
             updateStats(
                 attendanceRecords
@@ -214,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         attendanceTableBody.innerHTML = "";
 
+
         if (list.length === 0) {
 
             attendanceEmpty.style.display =
@@ -221,6 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             return;
         }
+
 
         attendanceEmpty.style.display =
             "none";
@@ -244,54 +306,108 @@ document.addEventListener("DOMContentLoaded", function () {
                     : "Unknown";
 
 
-            row.innerHTML = `
+            // =================================
+            // Worker Page
+            // No Edit / Delete buttons
+            // =================================
 
-                <td>
-                    #${record.id}
-                </td>
+            if (isWorkerPage) {
 
-                <td>
-                    ${escapeHtml(record.date)}
-                </td>
+                row.innerHTML = `
 
-                <td>
-                    <strong>
-                        ${escapeHtml(workerName)}
-                    </strong>
-                </td>
+                    <td>
+                        #${record.id}
+                    </td>
 
-                <td>
-                    ${escapeHtml(worksiteName)}
-                </td>
+                    <td>
+                        ${escapeHtml(record.date)}
+                    </td>
 
-                <td>
-                    <span class="status-badge ${getStatusClass(record.status)}">
-                        ${escapeHtml(record.status)}
-                    </span>
-                </td>
+                    <td>
+                        <strong>
+                            ${escapeHtml(workerName)}
+                        </strong>
+                    </td>
 
-                <td>
-                    ${formatAmount(record.overtimeHours)} hrs
-                </td>
+                    <td>
+                        ${escapeHtml(worksiteName)}
+                    </td>
 
-                <td>
+                    <td>
+                        <span class="status-badge ${getStatusClass(record.status)}">
+                            ${escapeHtml(record.status)}
+                        </span>
+                    </td>
 
-                    <button
-                        type="button"
-                        class="table-action edit-action"
-                        onclick="editAttendance(${record.id})">
-                        Edit
-                    </button>
+                    <td>
+                        ${formatAmount(record.overtimeHours)} hrs
+                    </td>
 
-                    <button
-                        type="button"
-                        class="table-action delete-action"
-                        onclick="deleteAttendance(${record.id})">
-                        Delete
-                    </button>
+                    <td>
+                        <span style="color:#64748b;">
+                            View Only
+                        </span>
+                    </td>
+                `;
+            }
 
-                </td>
-            `;
+            // =================================
+            // Admin Page
+            // Edit / Delete buttons
+            // =================================
+
+            else {
+
+                row.innerHTML = `
+
+                    <td>
+                        #${record.id}
+                    </td>
+
+                    <td>
+                        ${escapeHtml(record.date)}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ${escapeHtml(workerName)}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${escapeHtml(worksiteName)}
+                    </td>
+
+                    <td>
+                        <span class="status-badge ${getStatusClass(record.status)}">
+                            ${escapeHtml(record.status)}
+                        </span>
+                    </td>
+
+                    <td>
+                        ${formatAmount(record.overtimeHours)} hrs
+                    </td>
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="table-action edit-action"
+                            onclick="editAttendance(${record.id})">
+                            Edit
+                        </button>
+
+                        <button
+                            type="button"
+                            class="table-action delete-action"
+                            onclick="deleteAttendance(${record.id})">
+                            Delete
+                        </button>
+
+                    </td>
+                `;
+            }
+
 
             attendanceTableBody.appendChild(row);
         });
@@ -314,9 +430,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (record.status === "PRESENT") {
                 present++;
             }
+
             else if (record.status === "HALF_DAY") {
                 halfDay++;
             }
+
             else if (record.status === "ABSENT") {
                 absent++;
             }
@@ -341,35 +459,40 @@ document.addEventListener("DOMContentLoaded", function () {
     // Open Attendance Modal
     // =========================
 
-    addAttendanceBtn.addEventListener(
-        "click",
-        async function () {
+    if (addAttendanceBtn) {
 
-            attendanceForm.reset();
+        addAttendanceBtn.addEventListener(
+            "click",
+            async function () {
 
-            attendanceMessage.textContent = "";
+                attendanceForm.reset();
 
-            overtimeHours.value = 0;
+                attendanceMessage.textContent = "";
 
-            attendanceModal.style.display =
-                "flex";
+                overtimeHours.value = 0;
 
-            try {
+                attendanceModal.style.display =
+                    "flex";
 
-                await loadWorkers();
-                await loadWorksites();
 
+                try {
+
+                    await loadWorkers();
+
+                    await loadWorksites();
+
+                }
+                catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        "Unable to load workers or worksites."
+                    );
+                }
             }
-            catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    "Unable to load workers or worksites."
-                );
-            }
-        }
-    );
+        );
+    }
 
 
     // =========================
@@ -389,191 +512,209 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    closeAttendanceModal.addEventListener(
-        "click",
-        closeModal
-    );
+    if (closeAttendanceModal) {
+
+        closeAttendanceModal.addEventListener(
+            "click",
+            closeModal
+        );
+    }
 
 
-    cancelAttendanceBtn.addEventListener(
-        "click",
-        closeModal
-    );
+    if (cancelAttendanceBtn) {
+
+        cancelAttendanceBtn.addEventListener(
+            "click",
+            closeModal
+        );
+    }
 
 
     // =========================
     // Status Change
     // =========================
 
-    attendanceStatus.addEventListener(
-        "change",
-        function () {
+    if (attendanceStatus) {
 
-            const status =
-                attendanceStatus.value;
+        attendanceStatus.addEventListener(
+            "change",
+            function () {
+
+                const status =
+                    attendanceStatus.value;
 
 
-            if (
-                status === "HALF_DAY" ||
-                status === "ABSENT"
-            ) {
+                if (
+                    status === "HALF_DAY" ||
+                    status === "ABSENT"
+                ) {
 
-                overtimeHours.value = 0;
+                    overtimeHours.value = 0;
 
-                overtimeHours.disabled =
-                    true;
+                    overtimeHours.disabled =
+                        true;
+                }
 
+                else {
+
+                    overtimeHours.disabled =
+                        false;
+                }
             }
-            else {
-
-                overtimeHours.disabled =
-                    false;
-            }
-        }
-    );
+        );
+    }
 
 
     // =========================
     // Add Attendance
     // =========================
 
-    attendanceForm.addEventListener(
-        "submit",
-        async function (event) {
+    if (attendanceForm) {
 
-            event.preventDefault();
+        attendanceForm.addEventListener(
+            "submit",
+            async function (event) {
 
-
-            const workerId =
-                Number(attendanceWorker.value);
-
-            const worksiteId =
-                Number(attendanceWorksite.value);
-
-            const date =
-                attendanceDate.value;
-
-            const status =
-                attendanceStatus.value;
-
-            let overtime =
-                Number(overtimeHours.value || 0);
+                event.preventDefault();
 
 
-            if (!workerId) {
-
-                showMessage(
-                    "Please select a worker."
-                );
-
-                return;
-            }
+                const workerId =
+                    Number(attendanceWorker.value);
 
 
-            if (!worksiteId) {
-
-                showMessage(
-                    "Please select a worksite."
-                );
-
-                return;
-            }
+                const worksiteId =
+                    Number(attendanceWorksite.value);
 
 
-            if (!date) {
-
-                showMessage(
-                    "Please select a date."
-                );
-
-                return;
-            }
+                const date =
+                    attendanceDate.value;
 
 
-            if (!status) {
-
-                showMessage(
-                    "Please select attendance status."
-                );
-
-                return;
-            }
+                const status =
+                    attendanceStatus.value;
 
 
-            if (overtime < 0) {
-
-                showMessage(
-                    "Overtime hours cannot be negative."
-                );
-
-                return;
-            }
-
-
-            if (
-                status === "HALF_DAY" ||
-                status === "ABSENT"
-            ) {
-
-                overtime = 0;
-            }
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        `/api/attendance?workerId=${workerId}&worksiteId=${worksiteId}`,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                date: date,
-                                status: status,
-                                overtimeHours: overtime
-                            })
-                        }
+                let overtime =
+                    Number(
+                        overtimeHours.value || 0
                     );
 
 
-                if (!response.ok) {
+                if (!workerId) {
 
-                    const errorText =
-                        await response.text();
-
-                    throw new Error(
-                        errorText ||
-                        "Unable to save attendance"
+                    showMessage(
+                        "Please select a worker."
                     );
+
+                    return;
                 }
 
 
-                closeModal();
+                if (!worksiteId) {
 
-                await loadAttendance();
+                    showMessage(
+                        "Please select a worksite."
+                    );
+
+                    return;
+                }
 
 
-                alert(
-                    "Attendance saved successfully."
-                );
+                if (!date) {
 
+                    showMessage(
+                        "Please select a date."
+                    );
+
+                    return;
+                }
+
+
+                if (!status) {
+
+                    showMessage(
+                        "Please select attendance status."
+                    );
+
+                    return;
+                }
+
+
+                if (overtime < 0) {
+
+                    showMessage(
+                        "Overtime hours cannot be negative."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    status === "HALF_DAY" ||
+                    status === "ABSENT"
+                ) {
+
+                    overtime = 0;
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/attendance?workerId=${workerId}&worksiteId=${worksiteId}`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    date: date,
+                                    status: status,
+                                    overtimeHours: overtime
+                                })
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        const errorText =
+                            await response.text();
+
+                        throw new Error(
+                            errorText ||
+                            "Unable to save attendance"
+                        );
+                    }
+
+
+                    closeModal();
+
+                    await loadAttendance();
+
+
+                    alert(
+                        "Attendance saved successfully."
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        error.message ||
+                        "Unable to connect to server."
+                    );
+                }
             }
-            catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    error.message ||
-                    "Unable to connect to server."
-                );
-            }
-        }
-    );
+        );
+    }
 
 
     // =========================
@@ -582,6 +723,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.editAttendance =
         async function (id) {
+
+            // Worker cannot edit
+            if (isWorkerPage) {
+                return;
+            }
+
 
             const record =
                 attendanceRecords.find(
@@ -661,6 +808,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const workerId =
                 record.worker.id;
 
+
             const worksiteId =
                 record.worksite.id;
 
@@ -725,6 +873,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.deleteAttendance =
         async function (id) {
+
+            // Worker cannot delete
+            if (isWorkerPage) {
+                return;
+            }
+
 
             const record =
                 attendanceRecords.find(
@@ -799,14 +953,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Refresh
     // =========================
 
-    refreshAttendanceBtn.addEventListener(
-        "click",
-        async function () {
+    if (refreshAttendanceBtn) {
 
-            await loadAttendance();
+        refreshAttendanceBtn.addEventListener(
+            "click",
+            async function () {
 
-        }
-    );
+                await loadAttendance();
+
+            }
+        );
+    }
 
 
     // =========================
@@ -819,13 +976,16 @@ document.addEventListener("DOMContentLoaded", function () {
             return "status-present";
         }
 
+
         if (status === "HALF_DAY") {
             return "status-halfday";
         }
 
+
         if (status === "ABSENT") {
             return "status-absent";
         }
+
 
         return "";
     }
@@ -851,8 +1011,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showMessage(message) {
 
-        attendanceMessage.textContent =
-            message;
+        if (attendanceMessage) {
+
+            attendanceMessage.textContent =
+                message;
+        }
     }
 
 

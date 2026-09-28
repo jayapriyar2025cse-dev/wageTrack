@@ -1,14 +1,18 @@
-```html
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Worker Dashboard - WageTrack</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -17,330 +21,913 @@
         }
 
         body {
-            background: #f4f7fb;
+            background: #f5f7fb;
             color: #1f2937;
         }
 
-        .navbar {
-            background: #2563eb;
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background: #0f3d66;
             color: white;
-            padding: 18px 40px;
+
+            padding: 25px 18px;
+
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: bold;
-        }
 
-        .welcome {
-            font-size: 15px;
-        }
-
-        .container {
-            padding: 35px 50px;
-        }
-
-        .heading {
-            margin-bottom: 25px;
-        }
-
-        .heading h1 {
-            font-size: 30px;
+            padding: 0 12px;
             margin-bottom: 8px;
         }
 
-        .heading p {
-            color: #6b7280;
+        .portal {
+            font-size: 12px;
+            color: #cfe3f5;
+
+            padding: 0 12px;
+            margin-bottom: 35px;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-            margin-bottom: 30px;
+        .nav-title {
+            font-size: 11px;
+            color: #9fc3df;
+
+            padding: 0 12px;
+            margin-bottom: 10px;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        .nav-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 14px;
+            margin-bottom: 6px;
+
+            border-radius: 9px;
+
+            color: #dceaf6;
+            text-decoration: none;
+
+            font-size: 14px;
+
             transition: 0.2s;
         }
 
-        .card:hover {
-            transform: translateY(-3px);
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
         }
 
-        .card-icon {
-            font-size: 30px;
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.14);
+            color: white;
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .logout {
+            color: #ffd7d7;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+
+        .topbar {
+            height: 75px;
+
+            background: white;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #e6f0f8;
+
+            color: #0f3d66;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* CONTENT */
+
+        .content {
+            padding: 35px;
+        }
+
+        .welcome-card {
+            background: linear-gradient(
+                135deg,
+                #0f3d66,
+                #1d5d91
+            );
+
+            color: white;
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(15, 61, 102, 0.15);
+        }
+
+        .welcome-card h1 {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-card p {
+            color: #dceaf6;
+            font-size: 14px;
+        }
+
+        /* STAT CARDS */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 23px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0f3d66;
+        }
+
+        /* SECTION */
+
+        .section-title {
+            font-size: 19px;
+            font-weight: 600;
+
+            margin-bottom: 17px;
+        }
+
+        /* QUICK ACCESS */
+
+        .quick-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .quick-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 24px;
+
+            text-decoration: none;
+
+            color: #1f2937;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0, 0, 0, 0.04);
+        }
+
+        .quick-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 20px
+                rgba(0, 0, 0, 0.08);
+        }
+
+        .quick-icon {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 10px;
+
+            background: #eaf3fa;
+
+            color: #0f3d66;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
             margin-bottom: 15px;
         }
 
-        .card h3 {
+        .quick-card h3 {
+            font-size: 16px;
             margin-bottom: 8px;
-            font-size: 19px;
         }
 
-        .card p {
+        .quick-card p {
             color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 18px;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        .btn {
-            display: inline-block;
-            text-decoration: none;
-            background: #2563eb;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
+        /* PROFILE */
 
-        .btn:hover {
-            background: #1d4ed8;
-        }
-
-        .profile {
+        .profile-card {
             background: white;
-            padding: 28px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
 
-        .profile h2 {
-            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+
+            border-radius: 13px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0, 0, 0, 0.04);
         }
 
         .profile-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
         }
 
         .profile-item {
-            background: #f8fafc;
             padding: 15px;
-            border-radius: 8px;
+
+            background: #f8fafc;
+
+            border-radius: 9px;
         }
 
-        .profile-item strong {
-            display: block;
+        .profile-label {
+            font-size: 12px;
+
             color: #6b7280;
-            font-size: 13px;
-            margin-bottom: 5px;
+
+            margin-bottom: 6px;
         }
 
-        .profile-item span {
-            font-size: 16px;
+        .profile-value {
+            font-size: 14px;
+
             font-weight: 600;
+
+            color: #1f2937;
         }
 
-        @media (max-width: 800px) {
+        /* RESPONSIVE */
 
-            .cards {
+        @media (max-width: 1000px) {
+
+            .stats,
+            .quick-grid {
                 grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .content {
+                padding: 20px;
             }
 
             .profile-grid {
                 grid-template-columns: 1fr;
             }
 
-            .container {
-                padding: 25px;
+        }
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+                height: auto;
             }
 
-            .navbar {
-                padding: 18px 25px;
+            .main {
+                margin-left: 0;
             }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- Navbar -->
-    <div class="navbar">
+<!-- ================= SIDEBAR ================= -->
 
-        <div class="logo">
-            WageTrack
+<div class="sidebar">
+
+    <div class="logo">
+        WageTrack
+    </div>
+
+    <div class="portal">
+        Worker Portal
+    </div>
+
+
+    <div class="nav-title">
+        Menu
+    </div>
+
+
+    <!-- Dashboard -->
+
+    <a href="/worker-dashboard"
+       class="nav-item active">
+
+        <span class="nav-icon">
+            🏠
+        </span>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- Attendance -->
+
+    <a href="/worker-attendance"
+       class="nav-item">
+
+        <span class="nav-icon">
+            📅
+        </span>
+
+        <span>
+            My Attendance
+        </span>
+
+    </a>
+
+
+    <!-- Wage Summary -->
+
+    <a href="/worker-weekly-summary"
+       class="nav-item">
+
+        <span class="nav-icon">
+            📊
+        </span>
+
+        <span>
+            Wage Summary
+        </span>
+
+    </a>
+
+
+    <!-- Payments -->
+
+    <a href="/worker-payments"
+       class="nav-item">
+
+        <span class="nav-icon">
+            💰
+        </span>
+
+        <span>
+            My Payments
+        </span>
+
+    </a>
+
+
+    <!-- Logout -->
+
+    <div class="sidebar-bottom">
+
+        <a href="/logout"
+           class="nav-item logout">
+
+            <span class="nav-icon">
+                🚪
+            </span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+            Worker Dashboard
         </div>
 
-        <div class="welcome">
-            Welcome,
-            <strong th:text="${worker != null ? worker.name : user.username}">
-                Worker
-            </strong>
+
+        <div class="user-info">
+
+            <div class="user-avatar">
+
+                <span
+                    th:text="${worker != null ? worker.name.substring(0,1).toUpperCase() : 'W'}">
+
+                    R
+
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <div class="user-name"
+                     th:text="${worker != null ? worker.name : user.username}">
+
+                    Ravi Kumar
+
+                </div>
+
+                <div class="user-role">
+                    Worker
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
 
-    <!-- Main Content -->
-    <div class="container">
+    <!-- ================= CONTENT ================= -->
 
-        <!-- Heading -->
-        <div class="heading">
+    <div class="content">
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome-card">
 
             <h1>
+
                 Welcome,
-                <span th:text="${worker != null ? worker.name : user.username}">
-                    Worker
+
+                <span
+                    th:text="${worker != null ? worker.name : user.username}">
+
+                    Ravi Kumar
+
                 </span>
+
             </h1>
 
+
             <p>
-                View your attendance, wage summary and payment details.
+
+                View your attendance,
+                wage summary and payment details.
+
             </p>
 
         </div>
 
 
-        <!-- Dashboard Cards -->
-        <div class="cards">
+        <!-- ================= STATS ================= -->
+
+        <div class="stats">
+
+
+            <!-- Daily Wage -->
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Daily Wage
+                </div>
+
+
+                <div class="stat-value">
+
+                    ₹
+
+                    <span
+                        th:text="${worker != null ? worker.dailyWage : '0'}">
+
+                        800
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
 
             <!-- Attendance -->
-            <div class="card">
 
-                <div class="card-icon">
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Attendance
+                </div>
+
+
+                <div class="stat-value">
+                    View Records
+                </div>
+
+            </div>
+
+
+
+            <!-- Wage -->
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Wage Summary
+                </div>
+
+
+                <div class="stat-value">
+                    View Earnings
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ================= QUICK ACCESS ================= -->
+
+        <div class="section-title">
+            Quick Access
+        </div>
+
+
+        <div class="quick-grid">
+
+
+            <!-- Attendance -->
+
+            <a href="/worker-attendance"
+               class="quick-card">
+
+                <div class="quick-icon">
                     📅
                 </div>
 
-                <h3>My Attendance</h3>
+
+                <h3>
+                    My Attendance
+                </h3>
+
 
                 <p>
-                    View your attendance records and working days.
+
+                    View your attendance
+                    records and working days.
+
                 </p>
 
-                <a href="/attendance" class="btn">
-                    View Attendance
-                </a>
+            </a>
 
-            </div>
 
 
             <!-- Wage Summary -->
-            <div class="card">
 
-                <div class="card-icon">
-                    💰
+            <a href="/worker-weekly-summary"
+               class="quick-card">
+
+                <div class="quick-icon">
+                    📊
                 </div>
 
-                <h3>Wage Summary</h3>
+
+                <h3>
+                    Wage Summary
+                </h3>
+
 
                 <p>
-                    Check your weekly wage calculation and earnings.
+
+                    Check your weekly wage
+                    calculation and earnings.
+
                 </p>
 
-                <a href="/weekly-wage-summary" class="btn">
-                    View Wage
-                </a>
+            </a>
 
-            </div>
 
 
             <!-- Payments -->
-            <div class="card">
 
-                <div class="card-icon">
-                    💳
+            <a href="/worker-payments"
+               class="quick-card">
+
+                <div class="quick-icon">
+                    💰
                 </div>
 
-                <h3>My Payments</h3>
+
+                <h3>
+                    My Payments
+                </h3>
+
 
                 <p>
-                    View your payment and wage payment history.
+
+                    View your payment and
+                    wage payment history.
+
                 </p>
 
-                <a href="/payments" class="btn">
-                    View Payments
-                </a>
+            </a>
 
-            </div>
 
         </div>
 
 
-        <!-- Profile -->
-        <div class="profile">
+        <!-- ================= PROFILE ================= -->
 
-            <h2>My Profile</h2>
+        <div class="section-title">
+            My Profile
+        </div>
+
+
+        <div class="profile-card">
+
 
             <div class="profile-grid">
 
-                <!-- Worker Name -->
+
+                <!-- Name -->
+
                 <div class="profile-item">
 
-                    <strong>Name</strong>
+                    <div class="profile-label">
+                        Name
+                    </div>
 
-                    <span th:text="${worker != null ? worker.name : 'Not available'}">
-                        Worker
-                    </span>
+
+                    <div class="profile-value"
+                         th:text="${worker != null ? worker.name : 'Not Available'}">
+
+                        Ravi Kumar
+
+                    </div>
 
                 </div>
+
 
 
                 <!-- Username -->
+
                 <div class="profile-item">
 
-                    <strong>Username</strong>
+                    <div class="profile-label">
+                        Username
+                    </div>
 
-                    <span th:text="${user.username}">
-                        username
-                    </span>
+
+                    <div class="profile-value"
+                         th:text="${user.username}">
+
+                        ravi
+
+                    </div>
 
                 </div>
+
 
 
                 <!-- Email -->
+
                 <div class="profile-item">
 
-                    <strong>Email</strong>
+                    <div class="profile-label">
+                        Email
+                    </div>
 
-                    <span th:text="${user.email}">
-                        email
-                    </span>
+
+                    <div class="profile-value"
+                         th:text="${user.email}">
+
+                        ravi@wagetrack.com
+
+                    </div>
 
                 </div>
+
 
 
                 <!-- Role -->
+
                 <div class="profile-item">
 
-                    <strong>Role</strong>
+                    <div class="profile-label">
+                        Role
+                    </div>
 
-                    <span th:text="${user.role}">
+
+                    <div class="profile-value"
+                         th:text="${user.role}">
+
                         WORKER
-                    </span>
+
+                    </div>
 
                 </div>
+
 
 
                 <!-- Daily Wage -->
+
                 <div class="profile-item">
 
-                    <strong>Daily Wage</strong>
+                    <div class="profile-label">
+                        Daily Wage
+                    </div>
 
-                    <span th:if="${worker != null}"
-                          th:text="'₹ ' + ${worker.dailyWage}">
-                        ₹ 0
-                    </span>
 
-                    <span th:unless="${worker != null}">
-                        Not available
-                    </span>
+                    <div class="profile-value">
+
+                        ₹
+
+                        <span
+                            th:text="${worker != null ? worker.dailyWage : '0'}">
+
+                            800
+
+                        </span>
+
+                    </div>
 
                 </div>
+
+
+
+                <!-- Worker ID -->
+
+                <div class="profile-item">
+
+                    <div class="profile-label">
+                        Worker ID
+                    </div>
+
+
+                    <div class="profile-value"
+                         th:text="${user.workerId}">
+
+                        1
+
+                    </div>
+
+                </div>
+
 
             </div>
 
         </div>
 
+
     </div>
+
+</div>
+
 
 </body>
 

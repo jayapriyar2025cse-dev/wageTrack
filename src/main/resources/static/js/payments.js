@@ -43,8 +43,32 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("paymentMessage");
 
 
+    // =====================================
+    // Check Worker Page
+    // =====================================
+
+    const isWorkerPage =
+        window.location.pathname === "/worker-payments";
+
+
     let payments = [];
     let workers = [];
+
+
+    // =====================================
+    // Hide Admin Controls for Worker
+    // =====================================
+
+    if (isWorkerPage) {
+
+        if (addPaymentBtn) {
+            addPaymentBtn.style.display = "none";
+        }
+
+        if (paymentModal) {
+            paymentModal.style.display = "none";
+        }
+    }
 
 
     // =========================
@@ -53,15 +77,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function loadWorkers() {
 
+        // Worker does not need worker list
+        if (isWorkerPage) {
+            return;
+        }
+
         const response =
             await fetch("/api/workers");
 
+
         if (!response.ok) {
-            throw new Error("Unable to load workers");
+            throw new Error(
+                "Unable to load workers"
+            );
         }
+
 
         workers =
             await response.json();
+
 
         populateWorkerDropdown();
     }
@@ -73,24 +107,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function populateWorkerDropdown() {
 
+        if (!paymentWorker) {
+            return;
+        }
+
+
         paymentWorker.innerHTML = `
             <option value="">
                 Select worker
             </option>
         `;
 
+
         workers.forEach(function (worker) {
 
             const option =
                 document.createElement("option");
 
+
             option.value =
                 worker.id;
+
 
             option.textContent =
                 worker.name +
                 " - ₹" +
                 formatAmount(worker.dailyWage);
+
 
             paymentWorker.appendChild(option);
         });
@@ -105,19 +148,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
 
+            let url =
+                "/api/payments";
+
+
+            // Worker:
+            // own payments only
+            if (isWorkerPage) {
+
+                url =
+                    "/api/payments/my";
+            }
+
+
             const response =
-                await fetch("/api/payments");
+                await fetch(url);
+
 
             if (!response.ok) {
+
                 throw new Error(
                     "Unable to load payments"
                 );
             }
 
+
             payments =
                 await response.json();
 
+
             renderPayments(payments);
+
             updateStats(payments);
 
         }
@@ -125,10 +186,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.error(error);
 
+
             paymentsTableBody.innerHTML = "";
+
 
             paymentsEmpty.style.display =
                 "block";
+
 
             paymentsEmpty.innerHTML = `
                 <h3>Unable to load payments</h3>
@@ -146,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         paymentsTableBody.innerHTML = "";
 
+
         if (list.length === 0) {
 
             paymentsEmpty.style.display =
@@ -153,6 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             return;
         }
+
 
         paymentsEmpty.style.display =
             "none";
@@ -170,66 +236,141 @@ document.addEventListener("DOMContentLoaded", function () {
                     : "Unknown";
 
 
-            row.innerHTML = `
+            // =================================
+            // Worker Page
+            // View Only
+            // =================================
 
-                <td>
-                    #${payment.id}
-                </td>
+            if (isWorkerPage) {
 
-                <td>
-                    <div class="worker-table-name">
+                row.innerHTML = `
 
-                        <div class="worker-avatar">
-                            ${getInitial(workerName)}
+                    <td>
+                        #${payment.id}
+                    </td>
+
+                    <td>
+
+                        <div class="worker-table-name">
+
+                            <div class="worker-avatar">
+                                ${getInitial(workerName)}
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    ${escapeHtml(workerName)}
+                                </strong>
+
+                                <span>
+                                    Worker payment
+                                </span>
+
+                            </div>
+
                         </div>
 
-                        <div>
-                            <strong>
-                                ${escapeHtml(workerName)}
-                            </strong>
+                    </td>
 
-                            <span>
-                                Worker payment
-                            </span>
+                    <td>
+                        ${escapeHtml(payment.paymentDate)}
+                    </td>
+
+                    <td>
+                        <strong>
+                            ₹${formatAmount(payment.amount)}
+                        </strong>
+                    </td>
+
+                    <td>
+                        <span class="payment-status">
+                            Paid
+                        </span>
+                    </td>
+
+                    <td>
+                        <span style="color:#64748b;">
+                            View Only
+                        </span>
+                    </td>
+                `;
+            }
+
+
+            // =================================
+            // Admin Page
+            // Edit / Delete
+            // =================================
+
+            else {
+
+                row.innerHTML = `
+
+                    <td>
+                        #${payment.id}
+                    </td>
+
+                    <td>
+
+                        <div class="worker-table-name">
+
+                            <div class="worker-avatar">
+                                ${getInitial(workerName)}
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    ${escapeHtml(workerName)}
+                                </strong>
+
+                                <span>
+                                    Worker payment
+                                </span>
+
+                            </div>
+
                         </div>
 
-                    </div>
-                </td>
+                    </td>
 
-                <td>
-                    ${escapeHtml(payment.paymentDate)}
-                </td>
+                    <td>
+                        ${escapeHtml(payment.paymentDate)}
+                    </td>
 
-                <td>
-                    <strong>
-                        ₹${formatAmount(payment.amount)}
-                    </strong>
-                </td>
+                    <td>
+                        <strong>
+                            ₹${formatAmount(payment.amount)}
+                        </strong>
+                    </td>
 
-                <td>
-                    <span class="payment-status">
-                        Paid
-                    </span>
-                </td>
+                    <td>
+                        <span class="payment-status">
+                            Paid
+                        </span>
+                    </td>
 
-                <td>
+                    <td>
 
-                    <button
-                        type="button"
-                        class="table-action edit-action"
-                        onclick="editPayment(${payment.id})">
-                        Edit
-                    </button>
+                        <button
+                            type="button"
+                            class="table-action edit-action"
+                            onclick="editPayment(${payment.id})">
+                            Edit
+                        </button>
 
-                    <button
-                        type="button"
-                        class="table-action delete-action"
-                        onclick="deletePayment(${payment.id})">
-                        Delete
-                    </button>
+                        <button
+                            type="button"
+                            class="table-action delete-action"
+                            onclick="deletePayment(${payment.id})">
+                            Delete
+                        </button>
 
-                </td>
-            `;
+                    </td>
+                `;
+            }
+
 
             paymentsTableBody.appendChild(row);
         });
@@ -267,32 +408,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // Open Payment Modal
     // =========================
 
-    addPaymentBtn.addEventListener(
-        "click",
-        async function () {
+    if (addPaymentBtn) {
 
-            paymentForm.reset();
+        addPaymentBtn.addEventListener(
+            "click",
+            async function () {
 
-            paymentMessage.textContent = "";
+                paymentForm.reset();
 
-            paymentModal.style.display =
-                "flex";
+                paymentMessage.textContent = "";
 
-            try {
+                paymentModal.style.display =
+                    "flex";
 
-                await loadWorkers();
 
+                try {
+
+                    await loadWorkers();
+
+                }
+                catch (error) {
+
+                    console.error(error);
+
+                    showMessage(
+                        "Unable to load workers."
+                    );
+                }
             }
-            catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    "Unable to load workers."
-                );
-            }
-        }
-    );
+        );
+    }
 
 
     // =========================
@@ -310,123 +455,137 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    closePaymentModal.addEventListener(
-        "click",
-        closeModal
-    );
+    if (closePaymentModal) {
+
+        closePaymentModal.addEventListener(
+            "click",
+            closeModal
+        );
+    }
 
 
-    cancelPaymentBtn.addEventListener(
-        "click",
-        closeModal
-    );
+    if (cancelPaymentBtn) {
+
+        cancelPaymentBtn.addEventListener(
+            "click",
+            closeModal
+        );
+    }
 
 
     // =========================
     // Add Payment
     // =========================
 
-    paymentForm.addEventListener(
-        "submit",
-        async function (event) {
+    if (paymentForm) {
 
-            event.preventDefault();
+        paymentForm.addEventListener(
+            "submit",
+            async function (event) {
 
-
-            const workerId =
-                Number(paymentWorker.value);
-
-            const date =
-                paymentDate.value;
-
-            const amount =
-                Number(paymentAmount.value);
+                event.preventDefault();
 
 
-            if (!workerId) {
-
-                showMessage(
-                    "Please select a worker."
-                );
-
-                return;
-            }
+                const workerId =
+                    Number(paymentWorker.value);
 
 
-            if (!date) {
-
-                showMessage(
-                    "Please select payment date."
-                );
-
-                return;
-            }
+                const date =
+                    paymentDate.value;
 
 
-            if (!amount || amount <= 0) {
-
-                showMessage(
-                    "Payment amount must be greater than 0."
-                );
-
-                return;
-            }
+                const amount =
+                    Number(paymentAmount.value);
 
 
-            try {
+                if (!workerId) {
 
-                const response =
-                    await fetch(
-                        `/api/payments?workerId=${workerId}`,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                paymentDate: date,
-                                amount: amount
-                            })
-                        }
+                    showMessage(
+                        "Please select a worker."
                     );
 
-
-                if (!response.ok) {
-
-                    const errorText =
-                        await response.text();
-
-                    throw new Error(
-                        errorText ||
-                        "Unable to save payment"
-                    );
+                    return;
                 }
 
 
-                closeModal();
+                if (!date) {
 
-                await loadPayments();
+                    showMessage(
+                        "Please select payment date."
+                    );
+
+                    return;
+                }
 
 
-                alert(
-                    "Payment recorded successfully."
-                );
+                if (!amount || amount <= 0) {
 
+                    showMessage(
+                        "Payment amount must be greater than 0."
+                    );
+
+                    return;
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/api/payments?workerId=${workerId}`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    paymentDate: date,
+                                    amount: amount
+                                })
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        const errorText =
+                            await response.text();
+
+
+                        throw new Error(
+                            errorText ||
+                            "Unable to save payment"
+                        );
+                    }
+
+
+                    closeModal();
+
+
+                    await loadPayments();
+
+
+                    alert(
+                        "Payment recorded successfully."
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(error);
+
+
+                    showMessage(
+                        error.message ||
+                        "Unable to connect to server."
+                    );
+                }
             }
-            catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    error.message ||
-                    "Unable to connect to server."
-                );
-            }
-        }
-    );
+        );
+    }
 
 
     // =========================
@@ -436,9 +595,17 @@ document.addEventListener("DOMContentLoaded", function () {
     window.editPayment =
         async function (id) {
 
+            // Worker cannot edit
+            if (isWorkerPage) {
+                return;
+            }
+
+
             const payment =
                 payments.find(function (item) {
+
                     return item.id === id;
+
                 });
 
 
@@ -525,6 +692,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const errorText =
                         await response.text();
 
+
                     throw new Error(
                         errorText ||
                         "Unable to update payment"
@@ -544,6 +712,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 console.error(error);
 
+
                 alert(
                     error.message ||
                     "Unable to connect to server."
@@ -559,9 +728,17 @@ document.addEventListener("DOMContentLoaded", function () {
     window.deletePayment =
         async function (id) {
 
+            // Worker cannot delete
+            if (isWorkerPage) {
+                return;
+            }
+
+
             const payment =
                 payments.find(function (item) {
+
                     return item.id === id;
+
                 });
 
 
@@ -599,6 +776,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const errorText =
                         await response.text();
 
+
                     throw new Error(
                         errorText ||
                         "Unable to delete payment"
@@ -618,6 +796,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 console.error(error);
 
+
                 alert(
                     error.message ||
                     "Unable to connect to server."
@@ -630,14 +809,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Refresh
     // =========================
 
-    refreshPaymentsBtn.addEventListener(
-        "click",
-        async function () {
+    if (refreshPaymentsBtn) {
 
-            await loadPayments();
+        refreshPaymentsBtn.addEventListener(
+            "click",
+            async function () {
 
-        }
-    );
+                await loadPayments();
+
+            }
+        );
+    }
 
 
     // =========================
@@ -646,8 +828,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showMessage(message) {
 
-        paymentMessage.textContent =
-            message;
+        if (paymentMessage) {
+
+            paymentMessage.textContent =
+                message;
+        }
     }
 
 
@@ -674,6 +859,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!name) {
             return "?";
         }
+
 
         return name
             .trim()
@@ -706,6 +892,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
 
             await loadWorkers();
+
             await loadPayments();
 
         }
@@ -713,8 +900,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             console.error(error);
 
+
             paymentsEmpty.style.display =
                 "block";
+
 
             paymentsEmpty.innerHTML = `
                 <h3>Unable to load payment page</h3>

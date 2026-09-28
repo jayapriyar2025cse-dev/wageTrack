@@ -2,109 +2,229 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>WageTrack - Attendance</title>
 
     <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <!-- Sidebar -->
+
+    <!-- ================= SIDEBAR ================= -->
+
     <aside class="sidebar">
 
+
         <div class="logo">
-            <div class="logo-box">W</div>
+
+            <div class="logo-box">
+                W
+            </div>
 
             <div class="logo-text">
-                <h2>WageTrack</h2>
-                <span>Workforce Tracker</span>
+
+                <h2>
+                    WageTrack
+                </h2>
+
+                <span id="portalText">
+                    Workforce Tracker
+                </span>
+
             </div>
+
         </div>
+
+
 
         <nav class="navigation">
 
-            <a href="/dashboard" class="nav-link">
+
+            <!-- Dashboard -->
+
+            <a
+                href="/dashboard"
+                class="nav-link"
+                id="dashboardLink">
+
                 Dashboard
+
             </a>
 
-            <a href="/workers" class="nav-link">
+
+            <!-- Workers -->
+
+            <a
+                href="/workers"
+                class="nav-link"
+                id="workersLink">
+
                 Workers
+
             </a>
 
-            <a href="/worksites" class="nav-link">
+
+            <!-- Worksites -->
+
+            <a
+                href="/worksites"
+                class="nav-link"
+                id="worksitesLink">
+
                 Worksites
+
             </a>
 
-            <a href="/attendance" class="nav-link active">
+
+            <!-- Attendance -->
+
+            <a
+                href="/attendance"
+                class="nav-link active"
+                id="attendanceLink">
+
                 Attendance
+
             </a>
 
-            <a href="/weekly-summary" class="nav-link">
+
+            <!-- Weekly Summary -->
+
+            <a
+                href="/weekly-summary"
+                class="nav-link"
+                id="weeklySummaryLink">
+
                 Weekly Summary
+
             </a>
 
-            <a href="/payments" class="nav-link">
+
+            <!-- Payments -->
+
+            <a
+                href="/payments"
+                class="nav-link"
+                id="paymentsLink">
+
                 Payments
+
             </a>
+
 
         </nav>
 
     </aside>
 
 
-    <!-- Main Content -->
+
+    <!-- ================= MAIN CONTENT ================= -->
+
     <main class="main-content">
+
+
+        <!-- ================= TOPBAR ================= -->
 
         <header class="topbar">
 
+
             <div class="page-heading">
-                <h1>Attendance</h1>
-                <p>Record and manage daily worker attendance</p>
+
+                <h1 id="pageTitle">
+                    Attendance
+                </h1>
+
+                <p id="pageDescription">
+                    Record and manage daily worker attendance
+                </p>
+
             </div>
 
+
+
             <div class="profile">
+
 
                 <div class="profile-avatar">
                     A
                 </div>
 
+
                 <div class="profile-info">
-                    <strong>Admin</strong>
-                    <span>Administrator</span>
+
+                    <strong id="profileName">
+                        Admin
+                    </strong>
+
+                    <span id="profileRole">
+                        Administrator
+                    </span>
+
                 </div>
+
 
             </div>
 
         </header>
 
 
+
+        <!-- ================= CONTENT ================= -->
+
         <section class="dashboard-content">
 
-            <!-- Page Header -->
+
+            <!-- ================= PAGE HEADER ================= -->
+
             <div class="workers-page-header">
 
+
                 <div>
-                    <h2>Daily Attendance</h2>
-                    <p>Mark worker attendance and overtime hours.</p>
+
+                    <h2 id="attendanceTitle">
+                        Daily Attendance
+                    </h2>
+
+                    <p id="attendanceDescription">
+                        Mark worker attendance and overtime hours.
+                    </p>
+
                 </div>
+
+
+
+                <!-- ADMIN ONLY -->
 
                 <button
                     type="button"
                     class="primary-button"
                     id="addAttendanceBtn">
+
                     + Mark Attendance
+
                 </button>
+
 
             </div>
 
 
-            <!-- Attendance Stats -->
+
+            <!-- ================= STATISTICS ================= -->
+
             <div class="stats-grid">
+
+
+                <!-- Total -->
 
                 <div class="stat-card">
 
@@ -115,7 +235,9 @@
                     <div
                         class="stat-value"
                         id="totalAttendance">
+
                         0
+
                     </div>
 
                     <div class="stat-description">
@@ -124,6 +246,9 @@
 
                 </div>
 
+
+
+                <!-- Present -->
 
                 <div class="stat-card">
 
@@ -134,7 +259,9 @@
                     <div
                         class="stat-value"
                         id="presentCount">
+
                         0
+
                     </div>
 
                     <div class="stat-description">
@@ -143,6 +270,9 @@
 
                 </div>
 
+
+
+                <!-- Half Day -->
 
                 <div class="stat-card">
 
@@ -153,7 +283,9 @@
                     <div
                         class="stat-value"
                         id="halfDayCount">
+
                         0
+
                     </div>
 
                     <div class="stat-description">
@@ -162,6 +294,9 @@
 
                 </div>
 
+
+
+                <!-- Absent -->
 
                 <div class="stat-card">
 
@@ -172,7 +307,9 @@
                     <div
                         class="stat-value"
                         id="absentCount">
+
                         0
+
                     </div>
 
                     <div class="stat-description">
@@ -181,192 +318,320 @@
 
                 </div>
 
+
             </div>
 
 
-            <!-- Attendance Table -->
+
+            <!-- ================= ATTENDANCE TABLE ================= -->
+
             <div class="card">
+
 
                 <div class="card-header">
 
+
                     <div>
-                        <h2>Attendance Records</h2>
-                        <p>All recorded worker attendance</p>
+
+                        <h2 id="recordsTitle">
+                            Attendance Records
+                        </h2>
+
+                        <p id="recordsDescription">
+                            All recorded worker attendance
+                        </p>
+
                     </div>
+
+
 
                     <button
                         type="button"
                         class="secondary-button"
                         id="refreshAttendanceBtn">
+
                         Refresh
+
                     </button>
+
 
                 </div>
 
 
+
                 <div class="table-container">
 
+
                     <table class="data-table">
+
 
                         <thead>
 
                             <tr>
-                                <th>ID</th>
-                                <th>Date</th>
-                                <th>Worker</th>
-                                <th>Worksite</th>
-                                <th>Status</th>
-                                <th>Overtime</th>
-                                <th>Actions</th>
+
+                                <th>
+                                    ID
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Worker
+                                </th>
+
+                                <th>
+                                    Worksite
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Overtime
+                                </th>
+
+                                <th id="actionsHeader">
+                                    Actions
+                                </th>
+
                             </tr>
 
                         </thead>
 
+
+
                         <tbody id="attendanceTableBody">
                         </tbody>
+
 
                     </table>
 
                 </div>
 
 
+
+                <!-- Empty State -->
+
                 <div
                     id="attendanceEmpty"
                     class="empty-state"
                     style="display: none;">
 
-                    <h3>No attendance records found</h3>
 
-                    <p>
+                    <h3>
+                        No attendance records found
+                    </h3>
+
+
+                    <p id="emptyMessage">
+
                         Mark attendance to create the first record.
+
                     </p>
+
 
                 </div>
 
+
             </div>
+
 
         </section>
 
+
     </main>
+
 
 </div>
 
 
-<!-- Mark Attendance Modal -->
+
+<!-- ================= MARK ATTENDANCE MODAL ================= -->
+
 <div
     id="attendanceModal"
     class="modal-overlay"
     style="display: none;">
 
+
     <div class="modal">
+
+
+        <!-- Modal Header -->
 
         <div class="modal-header">
 
+
             <div>
-                <h2>Mark Attendance</h2>
-                <p>Enter daily attendance details.</p>
+
+                <h2>
+                    Mark Attendance
+                </h2>
+
+                <p>
+                    Enter daily attendance details.
+                </p>
+
             </div>
+
 
             <button
                 type="button"
                 class="close-button"
                 id="closeAttendanceModal">
+
                 ×
+
             </button>
+
 
         </div>
 
 
+
+        <!-- Form -->
+
         <form id="attendanceForm">
+
+
+            <!-- Worker -->
 
             <div class="form-group">
 
+
                 <label for="attendanceWorker">
+
                     Worker
+
                 </label>
+
 
                 <select
                     id="attendanceWorker"
                     required>
 
+
                     <option value="">
                         Select worker
                     </option>
 
+
                 </select>
+
 
             </div>
 
 
+
+            <!-- Worksite -->
+
             <div class="form-group">
 
+
                 <label for="attendanceWorksite">
+
                     Worksite
+
                 </label>
+
 
                 <select
                     id="attendanceWorksite"
                     required>
 
+
                     <option value="">
                         Select worksite
                     </option>
 
+
                 </select>
+
 
             </div>
 
 
+
+            <!-- Date -->
+
             <div class="form-group">
 
+
                 <label for="attendanceDate">
+
                     Date
+
                 </label>
+
 
                 <input
                     type="date"
                     id="attendanceDate"
                     required>
 
+
             </div>
 
 
+
+            <!-- Status -->
+
             <div class="form-group">
 
+
                 <label for="attendanceStatus">
+
                     Status
+
                 </label>
+
 
                 <select
                     id="attendanceStatus"
                     required>
 
+
                     <option value="">
                         Select status
                     </option>
+
 
                     <option value="PRESENT">
                         PRESENT
                     </option>
 
+
                     <option value="HALF_DAY">
                         HALF_DAY
                     </option>
+
 
                     <option value="ABSENT">
                         ABSENT
                     </option>
 
+
                 </select>
+
 
             </div>
 
 
+
+            <!-- Overtime -->
+
             <div class="form-group">
 
+
                 <label for="overtimeHours">
+
                     Overtime Hours
+
                 </label>
+
 
                 <input
                     type="number"
@@ -376,8 +641,12 @@
                     step="0.5"
                     value="0">
 
+
             </div>
 
+
+
+            <!-- Message -->
 
             <div
                 id="attendanceMessage"
@@ -385,31 +654,289 @@
             </div>
 
 
+
+            <!-- Buttons -->
+
             <div class="modal-actions">
+
 
                 <button
                     type="button"
                     class="secondary-button"
                     id="cancelAttendanceBtn">
+
                     Cancel
+
                 </button>
+
 
                 <button
                     type="submit"
                     class="primary-button">
+
                     Save Attendance
+
                 </button>
+
 
             </div>
 
+
         </form>
+
 
     </div>
 
 </div>
 
 
+
+<!-- ================= PAGE ROLE SCRIPT ================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        // =====================================
+        // Check Worker Page
+        // =====================================
+
+        const isWorkerPage =
+            window.location.pathname ===
+            "/worker-attendance";
+
+
+        if (!isWorkerPage) {
+
+            return;
+        }
+
+
+
+        // =====================================
+        // Worker Portal
+        // =====================================
+
+        const portalText =
+            document.getElementById(
+                "portalText"
+            );
+
+
+        if (portalText) {
+
+            portalText.textContent =
+                "Worker Portal";
+        }
+
+
+
+        // =====================================
+        // Dashboard
+        // =====================================
+
+        const dashboardLink =
+            document.getElementById(
+                "dashboardLink"
+            );
+
+
+        dashboardLink.href =
+            "/worker-dashboard";
+
+
+
+        // =====================================
+        // Hide Workers
+        // =====================================
+
+        document.getElementById(
+            "workersLink"
+        ).style.display =
+            "none";
+
+
+
+        // =====================================
+        // Hide Worksites
+        // =====================================
+
+        document.getElementById(
+            "worksitesLink"
+        ).style.display =
+            "none";
+
+
+
+        // =====================================
+        // My Attendance
+        // =====================================
+
+        const attendanceLink =
+            document.getElementById(
+                "attendanceLink"
+            );
+
+
+        attendanceLink.href =
+            "/worker-attendance";
+
+
+        attendanceLink.textContent =
+            "My Attendance";
+
+
+
+        // =====================================
+        // Wage Summary
+        // =====================================
+
+        const weeklySummaryLink =
+            document.getElementById(
+                "weeklySummaryLink"
+            );
+
+
+        weeklySummaryLink.href =
+            "/worker-weekly-summary";
+
+
+        weeklySummaryLink.textContent =
+            "Wage Summary";
+
+
+
+        // =====================================
+        // My Payments
+        // =====================================
+
+        const paymentsLink =
+            document.getElementById(
+                "paymentsLink"
+            );
+
+
+        paymentsLink.href =
+            "/worker-payments";
+
+
+        paymentsLink.textContent =
+            "My Payments";
+
+
+
+        // =====================================
+        // Topbar
+        // =====================================
+
+        document.getElementById(
+            "pageTitle"
+        ).textContent =
+            "My Attendance";
+
+
+        document.getElementById(
+            "pageDescription"
+        ).textContent =
+            "View your attendance records";
+
+
+        document.getElementById(
+            "profileName"
+        ).textContent =
+            "Worker";
+
+
+        document.getElementById(
+            "profileRole"
+        ).textContent =
+            "Worker";
+
+
+
+        // =====================================
+        // Page Header
+        // =====================================
+
+        document.getElementById(
+            "attendanceTitle"
+        ).textContent =
+            "My Attendance";
+
+
+        document.getElementById(
+            "attendanceDescription"
+        ).textContent =
+            "View your attendance and working records.";
+
+
+
+        // =====================================
+        // Hide Mark Attendance
+        // =====================================
+
+        const addAttendanceBtn =
+            document.getElementById(
+                "addAttendanceBtn"
+            );
+
+
+        if (addAttendanceBtn) {
+
+            addAttendanceBtn.style.display =
+                "none";
+        }
+
+
+
+        // =====================================
+        // Table Text
+        // =====================================
+
+        document.getElementById(
+            "recordsTitle"
+        ).textContent =
+            "My Attendance Records";
+
+
+        document.getElementById(
+            "recordsDescription"
+        ).textContent =
+            "Your attendance records";
+
+
+        document.getElementById(
+            "actionsHeader"
+        ).textContent =
+            "Access";
+
+
+
+        // =====================================
+        // Empty Message
+        // =====================================
+
+        document.getElementById(
+            "emptyMessage"
+        ).textContent =
+            "No attendance records available.";
+
+
+    }
+
+);
+
+</script>
+
+
+
+<!-- ================= ATTENDANCE JS ================= -->
+
 <script src="/js/attendance.js"></script>
+
 
 </body>
 

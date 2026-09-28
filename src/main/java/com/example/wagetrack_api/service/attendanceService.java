@@ -55,7 +55,11 @@ public class attendanceService {
 
         return attendanceRepository.findAll();
     }
+    // Get attendance for a particular worker
+public List<Attendance> getAttendanceByWorkerId(Long workerId) {
 
+    return attendanceRepository.findByWorkerId(workerId);
+}
     // Get attendance by ID
     public Attendance getAttendanceById(Long id) {
 

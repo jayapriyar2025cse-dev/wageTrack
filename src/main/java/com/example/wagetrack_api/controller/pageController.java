@@ -21,18 +21,39 @@ public class pageController {
         return "worksites";
     }
 
+    // Admin Attendance
     @GetMapping("/attendance")
     public String attendance() {
         return "attendance";
     }
 
+    // Worker Attendance
+    @GetMapping("/worker-attendance")
+    public String workerAttendance() {
+        return "attendance";
+    }
+
+    // Admin Weekly Summary
     @GetMapping("/weekly-summary")
     public String weeklySummary() {
         return "weekly-summary";
     }
 
+    // Worker Weekly Summary
+    @GetMapping("/worker-weekly-summary")
+    public String workerWeeklySummary() {
+        return "weekly-summary";
+    }
+
+    // Admin Payments
     @GetMapping("/payments")
     public String payments() {
+        return "payments";
+    }
+
+    // Worker Payments
+    @GetMapping("/worker-payments")
+    public String workerPayments() {
         return "payments";
     }
 }

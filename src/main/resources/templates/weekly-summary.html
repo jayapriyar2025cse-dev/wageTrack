@@ -2,53 +2,90 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>WageTrack - Weekly Summary</title>
 
     <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <!-- Sidebar -->
+
+    <!-- ================= SIDEBAR ================= -->
+
     <aside class="sidebar">
 
         <div class="logo">
-            <div class="logo-box">W</div>
+
+            <div class="logo-box">
+                W
+            </div>
 
             <div class="logo-text">
-                <h2>WageTrack</h2>
-                <span>Workforce Tracker</span>
+
+                <h2>
+                    WageTrack
+                </h2>
+
+                <span id="portalText">
+                    Workforce Tracker
+                </span>
+
             </div>
+
         </div>
+
 
         <nav class="navigation">
 
-            <a href="/dashboard" class="nav-link">
+
+            <a href="/dashboard"
+               class="nav-link"
+               id="dashboardLink">
                 Dashboard
             </a>
 
-            <a href="/workers" class="nav-link">
+
+            <a href="/workers"
+               class="nav-link"
+               id="workersLink">
                 Workers
             </a>
 
-            <a href="/worksites" class="nav-link">
+
+            <a href="/worksites"
+               class="nav-link"
+               id="worksitesLink">
                 Worksites
             </a>
 
-            <a href="/attendance" class="nav-link">
+
+            <a href="/attendance"
+               class="nav-link"
+               id="attendanceLink">
                 Attendance
             </a>
 
-            <a href="/weekly-summary" class="nav-link active">
+
+            <a href="/weekly-summary"
+               class="nav-link active"
+               id="weeklySummaryLink">
                 Weekly Summary
             </a>
 
-            <a href="/payments" class="nav-link">
+
+            <a href="/payments"
+               class="nav-link"
+               id="paymentsLink">
                 Payments
             </a>
 
@@ -57,16 +94,28 @@
     </aside>
 
 
-    <!-- Main Content -->
+
+    <!-- ================= MAIN CONTENT ================= -->
+
     <main class="main-content">
 
-        <!-- Topbar -->
+
+        <!-- ================= TOPBAR ================= -->
+
         <header class="topbar">
 
             <div class="page-heading">
-                <h1>Weekly Summary</h1>
-                <p>View weekly payable wages and overtime</p>
+
+                <h1 id="pageTitle">
+                    Weekly Summary
+                </h1>
+
+                <p id="pageDescription">
+                    View weekly payable wages and overtime
+                </p>
+
             </div>
+
 
             <div class="profile">
 
@@ -75,8 +124,15 @@
                 </div>
 
                 <div class="profile-info">
-                    <strong>Admin</strong>
-                    <span>Administrator</span>
+
+                    <strong id="profileName">
+                        Admin
+                    </strong>
+
+                    <span id="profileRole">
+                        Administrator
+                    </span>
+
                 </div>
 
             </div>
@@ -84,17 +140,28 @@
         </header>
 
 
-        <!-- Content -->
+
+        <!-- ================= CONTENT ================= -->
+
         <section class="dashboard-content">
 
-            <!-- Search / Filter Card -->
+
+            <!-- ================= SUMMARY FORM ================= -->
+
             <div class="card">
 
                 <div class="card-header">
 
                     <div>
-                        <h2>Generate Weekly Summary</h2>
-                        <p>Select a worker and date range.</p>
+
+                        <h2 id="summaryFormTitle">
+                            Generate Weekly Summary
+                        </h2>
+
+                        <p id="summaryFormDescription">
+                            Select a worker and date range.
+                        </p>
+
                     </div>
 
                 </div>
@@ -104,15 +171,22 @@
 
                     <div class="summary-form-grid">
 
-                        <div class="form-group">
+
+                        <!-- Worker -->
+
+                        <div class="form-group"
+                             id="workerGroup">
 
                             <label for="summaryWorker">
                                 Worker
                             </label>
 
-                            <select
-                                id="summaryWorker"
-                                required>
+                            <!--
+                                Important:
+                                required removed
+                            -->
+
+                            <select id="summaryWorker">
 
                                 <option value="">
                                     Select worker
@@ -122,6 +196,9 @@
 
                         </div>
 
+
+
+                        <!-- Start Date -->
 
                         <div class="form-group">
 
@@ -137,6 +214,9 @@
                         </div>
 
 
+
+                        <!-- End Date -->
+
                         <div class="form-group">
 
                             <label for="endDate">
@@ -151,11 +231,15 @@
                         </div>
 
 
+
+                        <!-- Button -->
+
                         <div class="summary-form-button">
 
                             <button
                                 type="submit"
-                                class="primary-button">
+                                class="primary-button"
+                                id="generateButton">
 
                                 Generate Summary
 
@@ -176,22 +260,31 @@
             </div>
 
 
-            <!-- Summary Result -->
+
+            <!-- ================= RESULT ================= -->
+
             <div
                 class="card"
                 id="summaryResultCard"
                 style="display: none;">
 
+
                 <div class="card-header">
 
                     <div>
-                        <h2>Wage Summary</h2>
+
+                        <h2 id="resultTitle">
+                            Wage Summary
+                        </h2>
+
                         <p id="summaryPeriod">
                             Selected period
                         </p>
+
                     </div>
 
                 </div>
+
 
 
                 <div class="summary-worker-header">
@@ -200,7 +293,9 @@
                         W
                     </div>
 
+
                     <div>
+
                         <strong id="summaryWorkerName">
                             Worker
                         </strong>
@@ -208,19 +303,23 @@
                         <span>
                             Weekly wage calculation
                         </span>
+
                     </div>
 
                 </div>
 
 
+
                 <div class="wage-summary-grid">
+
 
                     <div class="wage-box">
 
-                        <span>Regular Wage</span>
+                        <span>
+                            Regular Wage
+                        </span>
 
-                        <strong
-                            id="regularWage">
+                        <strong id="regularWage">
                             ₹0
                         </strong>
 
@@ -229,10 +328,11 @@
 
                     <div class="wage-box">
 
-                        <span>Overtime Pay</span>
+                        <span>
+                            Overtime Pay
+                        </span>
 
-                        <strong
-                            id="overtimePay">
+                        <strong id="overtimePay">
                             ₹0
                         </strong>
 
@@ -241,38 +341,53 @@
 
                     <div class="wage-box total-wage-box">
 
-                        <span>Total Payable</span>
+                        <span>
+                            Total Payable
+                        </span>
 
-                        <strong
-                            id="totalPayable">
+                        <strong id="totalPayable">
                             ₹0
                         </strong>
 
                     </div>
+
 
                 </div>
 
             </div>
 
 
-            <!-- Explanation -->
+
+            <!-- ================= CALCULATION ================= -->
+
             <div class="card">
 
                 <div class="card-header">
 
                     <div>
-                        <h2>Calculation</h2>
-                        <p>How the weekly amount is determined</p>
+
+                        <h2 id="calculationTitle">
+                            Calculation
+                        </h2>
+
+                        <p id="calculationDescription">
+                            How the weekly amount is determined
+                        </p>
+
                     </div>
 
                 </div>
 
 
+
                 <div class="calculation-list">
+
 
                     <div class="calculation-item">
 
-                        <span>Regular wage</span>
+                        <span>
+                            Regular wage
+                        </span>
 
                         <strong>
                             PRESENT = full daily wage
@@ -283,7 +398,9 @@
 
                     <div class="calculation-item">
 
-                        <span>Half day</span>
+                        <span>
+                            Half day
+                        </span>
 
                         <strong>
                             HALF_DAY = 50% of daily wage
@@ -294,7 +411,9 @@
 
                     <div class="calculation-item">
 
-                        <span>Absent</span>
+                        <span>
+                            Absent
+                        </span>
 
                         <strong>
                             ABSENT = ₹0
@@ -305,7 +424,9 @@
 
                     <div class="calculation-item">
 
-                        <span>Overtime</span>
+                        <span>
+                            Overtime
+                        </span>
 
                         <strong>
                             Calculated separately from regular wage
@@ -313,9 +434,11 @@
 
                     </div>
 
+
                 </div>
 
             </div>
+
 
         </section>
 
@@ -324,7 +447,573 @@
 </div>
 
 
-<script src="/js/weekly-summary.js"></script>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        // =====================================
+        // Get Elements
+        // =====================================
+
+        const summaryForm =
+            document.getElementById("summaryForm");
+
+        const summaryWorker =
+            document.getElementById("summaryWorker");
+
+        const workerGroup =
+            document.getElementById("workerGroup");
+
+        const startDate =
+            document.getElementById("startDate");
+
+        const endDate =
+            document.getElementById("endDate");
+
+        const summaryMessage =
+            document.getElementById("summaryMessage");
+
+        const summaryResultCard =
+            document.getElementById("summaryResultCard");
+
+        const summaryPeriod =
+            document.getElementById("summaryPeriod");
+
+        const summaryWorkerName =
+            document.getElementById("summaryWorkerName");
+
+        const regularWage =
+            document.getElementById("regularWage");
+
+        const overtimePay =
+            document.getElementById("overtimePay");
+
+        const totalPayable =
+            document.getElementById("totalPayable");
+
+        const generateButton =
+            document.getElementById("generateButton");
+
+
+        // =====================================
+        // Check Worker Page
+        // =====================================
+
+        const isWorkerPage =
+            window.location.pathname ===
+            "/worker-weekly-summary";
+
+
+        // =====================================
+        // Worker Page Setup
+        // =====================================
+
+        if (isWorkerPage) {
+
+
+            // Worker Portal
+
+            document.getElementById(
+                "portalText"
+            ).textContent =
+                "Worker Portal";
+
+
+            // Dashboard
+
+            document.getElementById(
+                "dashboardLink"
+            ).href =
+                "/worker-dashboard";
+
+
+            // Hide Workers
+
+            document.getElementById(
+                "workersLink"
+            ).style.display =
+                "none";
+
+
+            // Hide Worksites
+
+            document.getElementById(
+                "worksitesLink"
+            ).style.display =
+                "none";
+
+
+            // Attendance
+
+            document.getElementById(
+                "attendanceLink"
+            ).href =
+                "/worker-attendance";
+
+
+            document.getElementById(
+                "attendanceLink"
+            ).textContent =
+                "My Attendance";
+
+
+            // Wage Summary
+
+            document.getElementById(
+                "weeklySummaryLink"
+            ).href =
+                "/worker-weekly-summary";
+
+
+            document.getElementById(
+                "weeklySummaryLink"
+            ).textContent =
+                "Wage Summary";
+
+
+            // Payments
+
+            document.getElementById(
+                "paymentsLink"
+            ).href =
+                "/worker-payments";
+
+
+            document.getElementById(
+                "paymentsLink"
+            ).textContent =
+                "My Payments";
+
+
+            // Page title
+
+            document.getElementById(
+                "pageTitle"
+            ).textContent =
+                "My Wage Summary";
+
+
+            document.getElementById(
+                "pageDescription"
+            ).textContent =
+                "View your weekly wage calculation";
+
+
+            // Profile
+
+            document.getElementById(
+                "profileName"
+            ).textContent =
+                "Worker";
+
+
+            document.getElementById(
+                "profileRole"
+            ).textContent =
+                "Worker";
+
+
+            // Form title
+
+            document.getElementById(
+                "summaryFormTitle"
+            ).textContent =
+                "Generate My Wage Summary";
+
+
+            document.getElementById(
+                "summaryFormDescription"
+            ).textContent =
+                "Select a date range to view your wage.";
+
+
+            // Hide worker selection
+
+            workerGroup.style.display =
+                "none";
+
+
+            // Result title
+
+            document.getElementById(
+                "resultTitle"
+            ).textContent =
+                "My Wage Summary";
+
+
+            // Button text
+
+            generateButton.textContent =
+                "Generate My Summary";
+
+        }
+
+
+
+        // =====================================
+        // Default Dates
+        // =====================================
+
+        startDate.value =
+            "2026-09-28";
+
+        endDate.value =
+            "2026-10-04";
+
+
+
+        // =====================================
+        // Load Workers - Admin
+        // =====================================
+
+        async function loadWorkers() {
+
+
+            if (isWorkerPage) {
+                return;
+            }
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/workers"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load workers"
+                    );
+
+                }
+
+
+                const workers =
+                    await response.json();
+
+
+                summaryWorker.innerHTML = `
+                    <option value="">
+                        Select worker
+                    </option>
+                `;
+
+
+                workers.forEach(
+                    function (worker) {
+
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            worker.id;
+
+
+                        option.textContent =
+                            worker.name +
+                            " - ₹" +
+                            formatAmount(
+                                worker.dailyWage
+                            );
+
+
+                        summaryWorker.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+
+                if (workers.length > 0) {
+
+                    summaryWorker.value =
+                        workers[0].id;
+
+                }
+
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                summaryMessage.textContent =
+                    "Unable to load workers.";
+
+            }
+
+        }
+
+
+
+        // =====================================
+        // Generate Summary
+        // =====================================
+
+        summaryForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                summaryMessage.textContent =
+                    "";
+
+                summaryResultCard.style.display =
+                    "none";
+
+
+                const start =
+                    startDate.value;
+
+
+                const end =
+                    endDate.value;
+
+
+                // -------------------------
+                // Date validation
+                // -------------------------
+
+                if (!start || !end) {
+
+                    summaryMessage.textContent =
+                        "Please select both dates.";
+
+                    return;
+                }
+
+
+                if (end < start) {
+
+                    summaryMessage.textContent =
+                        "End date cannot be before start date.";
+
+                    return;
+                }
+
+
+                try {
+
+
+                    let url;
+
+
+                    // =========================
+                    // Worker
+                    // =========================
+
+                    if (isWorkerPage) {
+
+                        url =
+                            "/api/attendance/my-weekly-summary" +
+                            "?startDate=" +
+                            start +
+                            "&endDate=" +
+                            end;
+
+                    }
+
+
+                    // =========================
+                    // Admin
+                    // =========================
+
+                    else {
+
+                        const workerId =
+                            Number(
+                                summaryWorker.value
+                            );
+
+
+                        if (!workerId) {
+
+                            summaryMessage.textContent =
+                                "Please select a worker.";
+
+                            return;
+                        }
+
+
+                        url =
+                            "/api/attendance/weekly-summary" +
+                            "?workerId=" +
+                            workerId +
+                            "&startDate=" +
+                            start +
+                            "&endDate=" +
+                            end;
+
+                    }
+
+
+                    // =========================
+                    // Call API
+                    // =========================
+
+                    const response =
+                        await fetch(url);
+
+
+                    if (!response.ok) {
+
+                        const errorText =
+                            await response.text();
+
+
+                        throw new Error(
+                            errorText ||
+                            "Unable to generate summary."
+                        );
+
+                    }
+
+
+                    const summary =
+                        await response.json();
+
+
+                    // =========================
+                    // Display Result
+                    // =========================
+
+                    summaryWorkerName.textContent =
+                        summary.workerName;
+
+
+                    summaryPeriod.textContent =
+                        formatDate(
+                            summary.startDate
+                        ) +
+                        " to " +
+                        formatDate(
+                            summary.endDate
+                        );
+
+
+                    regularWage.textContent =
+                        "₹" +
+                        formatAmount(
+                            summary.regularWage
+                        );
+
+
+                    overtimePay.textContent =
+                        "₹" +
+                        formatAmount(
+                            summary.overtimePay
+                        );
+
+
+                    totalPayable.textContent =
+                        "₹" +
+                        formatAmount(
+                            summary.totalPayable
+                        );
+
+
+                    summaryResultCard.style.display =
+                        "block";
+
+
+                }
+                catch (error) {
+
+
+                    console.error(error);
+
+
+                    summaryMessage.textContent =
+                        error.message ||
+                        "Unable to connect to server.";
+
+                }
+
+            }
+        );
+
+
+
+        // =====================================
+        // Format Amount
+        // =====================================
+
+        function formatAmount(value) {
+
+            return Number(value || 0)
+                .toLocaleString(
+                    "en-IN",
+                    {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+
+        // =====================================
+        // Format Date
+        // =====================================
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+
+                return "-";
+            }
+
+
+            const date =
+                new Date(
+                    dateValue +
+                    "T00:00:00"
+                );
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            );
+
+        }
+
+
+
+        // =====================================
+        // Start
+        // =====================================
+
+        loadWorkers();
+
+    }
+
+);
+
+</script>
+
 
 </body>
 
