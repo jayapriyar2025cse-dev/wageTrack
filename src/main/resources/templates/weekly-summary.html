@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WageTrack - Weekly Summary</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">W</div>
+
+            <div class="logo-text">
+                <h2>WageTrack</h2>
+                <span>Workforce Tracker</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/dashboard" class="nav-link">
+                Dashboard
+            </a>
+
+            <a href="/workers" class="nav-link">
+                Workers
+            </a>
+
+            <a href="/worksites" class="nav-link">
+                Worksites
+            </a>
+
+            <a href="/attendance" class="nav-link">
+                Attendance
+            </a>
+
+            <a href="/weekly-summary" class="nav-link active">
+                Weekly Summary
+            </a>
+
+            <a href="/payments" class="nav-link">
+                Payments
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Topbar -->
+        <header class="topbar">
+
+            <div class="page-heading">
+                <h1>Weekly Summary</h1>
+                <p>View weekly payable wages and overtime</p>
+            </div>
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+                    <strong>Admin</strong>
+                    <span>Administrator</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Content -->
+        <section class="dashboard-content">
+
+            <!-- Search / Filter Card -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Generate Weekly Summary</h2>
+                        <p>Select a worker and date range.</p>
+                    </div>
+
+                </div>
+
+
+                <form id="summaryForm">
+
+                    <div class="summary-form-grid">
+
+                        <div class="form-group">
+
+                            <label for="summaryWorker">
+                                Worker
+                            </label>
+
+                            <select
+                                id="summaryWorker"
+                                required>
+
+                                <option value="">
+                                    Select worker
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="startDate">
+                                Start Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="startDate"
+                                required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="endDate">
+                                End Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="endDate"
+                                required>
+
+                        </div>
+
+
+                        <div class="summary-form-button">
+
+                            <button
+                                type="submit"
+                                class="primary-button">
+
+                                Generate Summary
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    id="summaryMessage"
+                    class="form-message">
+                </div>
+
+            </div>
+
+
+            <!-- Summary Result -->
+            <div
+                class="card"
+                id="summaryResultCard"
+                style="display: none;">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Wage Summary</h2>
+                        <p id="summaryPeriod">
+                            Selected period
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="summary-worker-header">
+
+                    <div class="worker-avatar">
+                        W
+                    </div>
+
+                    <div>
+                        <strong id="summaryWorkerName">
+                            Worker
+                        </strong>
+
+                        <span>
+                            Weekly wage calculation
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="wage-summary-grid">
+
+                    <div class="wage-box">
+
+                        <span>Regular Wage</span>
+
+                        <strong
+                            id="regularWage">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="wage-box">
+
+                        <span>Overtime Pay</span>
+
+                        <strong
+                            id="overtimePay">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="wage-box total-wage-box">
+
+                        <span>Total Payable</span>
+
+                        <strong
+                            id="totalPayable">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Explanation -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Calculation</h2>
+                        <p>How the weekly amount is determined</p>
+                    </div>
+
+                </div>
+
+
+                <div class="calculation-list">
+
+                    <div class="calculation-item">
+
+                        <span>Regular wage</span>
+
+                        <strong>
+                            PRESENT = full daily wage
+                        </strong>
+
+                    </div>
+
+
+                    <div class="calculation-item">
+
+                        <span>Half day</span>
+
+                        <strong>
+                            HALF_DAY = 50% of daily wage
+                        </strong>
+
+                    </div>
+
+
+                    <div class="calculation-item">
+
+                        <span>Absent</span>
+
+                        <strong>
+                            ABSENT = ₹0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="calculation-item">
+
+                        <span>Overtime</span>
+
+                        <strong>
+                            Calculated separately from regular wage
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/weekly-summary.js"></script>
+
+</body>
+
+</html>

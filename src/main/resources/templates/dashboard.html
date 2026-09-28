@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WageTrack - Dashboard</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">W</div>
+
+            <div class="logo-text">
+                <h2>WageTrack</h2>
+                <span>Workforce Tracker</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/dashboard" class="nav-link active">
+                Dashboard
+            </a>
+
+            <a href="/workers" class="nav-link">
+                Workers
+            </a>
+
+            <a href="/worksites" class="nav-link">
+                Worksites
+            </a>
+
+            <a href="/attendance" class="nav-link">
+                Attendance
+            </a>
+
+            <a href="/weekly-summary" class="nav-link">
+                Weekly Summary
+            </a>
+
+            <a href="/payments" class="nav-link">
+                Payments
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Area -->
+    <main class="main-content">
+
+        <!-- Top Bar -->
+        <header class="topbar">
+
+            <div class="page-heading">
+                <h1>Dashboard</h1>
+                <p>Daily workforce and wage overview</p>
+            </div>
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+                    <strong>Admin</strong>
+                    <span>Administrator</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Dashboard Content -->
+        <section class="dashboard-content">
+
+            <!-- Statistics -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-label">
+                        Total Workers
+                    </div>
+
+                    <div class="stat-value" id="totalWorkers">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Registered workers
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-label">
+                        Total Worksites
+                    </div>
+
+                    <div class="stat-value" id="totalWorksites">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Registered worksites
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-label">
+                        Attendance Records
+                    </div>
+
+                    <div class="stat-value" id="totalAttendance">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Recorded attendance
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-label">
+                        Payments
+                    </div>
+
+                    <div class="stat-value" id="totalPayments">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Payment records
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Workforce Overview -->
+            <div class="content-grid">
+
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h2>Workforce Overview</h2>
+                            <p>Current workforce records</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-grid">
+
+                        <div class="overview-item">
+                            <span>Workers</span>
+                            <strong id="overviewWorkers">0</strong>
+                        </div>
+
+                        <div class="overview-item">
+                            <span>Worksites</span>
+                            <strong id="overviewWorksites">0</strong>
+                        </div>
+
+                        <div class="overview-item">
+                            <span>Attendance</span>
+                            <strong id="overviewAttendance">0</strong>
+                        </div>
+
+                        <div class="overview-item">
+                            <span>Payments</span>
+                            <strong id="overviewPayments">0</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick Actions -->
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <div>
+                            <h2>Quick Actions</h2>
+                            <p>Manage workforce records</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+                        <a href="/workers" class="action-button">
+                            Add Worker
+                        </a>
+
+                        <a href="/worksites" class="action-button">
+                            Add Worksite
+                        </a>
+
+                        <a href="/attendance" class="action-button">
+                            Mark Attendance
+                        </a>
+
+                        <a href="/payments" class="action-button">
+                            Record Payment
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Wage Summary -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Current Wage Summary</h2>
+                        <p>Weekly payable amount for the latest worker record</p>
+                    </div>
+
+                    <a href="/weekly-summary" class="view-link">
+                        View Summary
+                    </a>
+
+                </div>
+
+
+                <div id="wageSummary" class="summary-area">
+
+                    <div class="loading-message">
+                        Loading wage summary...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Recent Payments -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Recent Payment</h2>
+                        <p>Latest recorded payment</p>
+                    </div>
+
+                    <a href="/payments" class="view-link">
+                        View Payments
+                    </a>
+
+                </div>
+
+
+                <div id="recentPayment" class="summary-area">
+
+                    <div class="loading-message">
+                        Loading payment...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+
+</html>

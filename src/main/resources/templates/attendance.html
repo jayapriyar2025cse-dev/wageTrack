@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WageTrack - Attendance</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-box">W</div>
+
+            <div class="logo-text">
+                <h2>WageTrack</h2>
+                <span>Workforce Tracker</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/dashboard" class="nav-link">
+                Dashboard
+            </a>
+
+            <a href="/workers" class="nav-link">
+                Workers
+            </a>
+
+            <a href="/worksites" class="nav-link">
+                Worksites
+            </a>
+
+            <a href="/attendance" class="nav-link active">
+                Attendance
+            </a>
+
+            <a href="/weekly-summary" class="nav-link">
+                Weekly Summary
+            </a>
+
+            <a href="/payments" class="nav-link">
+                Payments
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div class="page-heading">
+                <h1>Attendance</h1>
+                <p>Record and manage daily worker attendance</p>
+            </div>
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+                    <strong>Admin</strong>
+                    <span>Administrator</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="dashboard-content">
+
+            <!-- Page Header -->
+            <div class="workers-page-header">
+
+                <div>
+                    <h2>Daily Attendance</h2>
+                    <p>Mark worker attendance and overtime hours.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="addAttendanceBtn">
+                    + Mark Attendance
+                </button>
+
+            </div>
+
+
+            <!-- Attendance Stats -->
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Total Records
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="totalAttendance">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Attendance entries
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Present
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="presentCount">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Present records
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Half Day
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="halfDayCount">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Half-day records
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Absent
+                    </div>
+
+                    <div
+                        class="stat-value"
+                        id="absentCount">
+                        0
+                    </div>
+
+                    <div class="stat-description">
+                        Absent records
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Attendance Table -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Attendance Records</h2>
+                        <p>All recorded worker attendance</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="refreshAttendanceBtn">
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Worker</th>
+                                <th>Worksite</th>
+                                <th>Status</th>
+                                <th>Overtime</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="attendanceTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    id="attendanceEmpty"
+                    class="empty-state"
+                    style="display: none;">
+
+                    <h3>No attendance records found</h3>
+
+                    <p>
+                        Mark attendance to create the first record.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- Mark Attendance Modal -->
+<div
+    id="attendanceModal"
+    class="modal-overlay"
+    style="display: none;">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>Mark Attendance</h2>
+                <p>Enter daily attendance details.</p>
+            </div>
+
+            <button
+                type="button"
+                class="close-button"
+                id="closeAttendanceModal">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="attendanceForm">
+
+            <div class="form-group">
+
+                <label for="attendanceWorker">
+                    Worker
+                </label>
+
+                <select
+                    id="attendanceWorker"
+                    required>
+
+                    <option value="">
+                        Select worker
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceWorksite">
+                    Worksite
+                </label>
+
+                <select
+                    id="attendanceWorksite"
+                    required>
+
+                    <option value="">
+                        Select worksite
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceDate">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="attendanceDate"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceStatus">
+                    Status
+                </label>
+
+                <select
+                    id="attendanceStatus"
+                    required>
+
+                    <option value="">
+                        Select status
+                    </option>
+
+                    <option value="PRESENT">
+                        PRESENT
+                    </option>
+
+                    <option value="HALF_DAY">
+                        HALF_DAY
+                    </option>
+
+                    <option value="ABSENT">
+                        ABSENT
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="overtimeHours">
+                    Overtime Hours
+                </label>
+
+                <input
+                    type="number"
+                    id="overtimeHours"
+                    placeholder="Enter overtime hours"
+                    min="0"
+                    step="0.5"
+                    value="0">
+
+            </div>
+
+
+            <div
+                id="attendanceMessage"
+                class="form-message">
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="cancelAttendanceBtn">
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-button">
+                    Save Attendance
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="/js/attendance.js"></script>
+
+</body>
+
+</html>

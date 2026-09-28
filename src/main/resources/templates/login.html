@@ -1,0 +1,412 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WageTrack | Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef4ff, #f8fbff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-wrapper {
+            width: 950px;
+            min-height: 570px;
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 20px 60px rgba(30, 64, 175, 0.15);
+        }
+
+        /* LEFT SIDE */
+
+        .welcome-section {
+            width: 50%;
+            background: linear-gradient(145deg, #1d4ed8, #2563eb, #3b82f6);
+            color: white;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            top: -100px;
+            right: -100px;
+        }
+
+        .welcome-section::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            bottom: -100px;
+            left: -80px;
+        }
+
+        .brand {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 45px;
+        }
+
+        .brand-icon {
+            width: 58px;
+            height: 58px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 29px;
+            margin-bottom: 20px;
+        }
+
+        .brand h1 {
+            font-size: 38px;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .brand p {
+            font-size: 15px;
+            opacity: 0.85;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-content h2 {
+            font-size: 30px;
+            line-height: 1.25;
+            margin-bottom: 18px;
+        }
+
+        .welcome-content p {
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 360px;
+            opacity: 0.88;
+        }
+
+        .features {
+            position: relative;
+            z-index: 2;
+            margin-top: 35px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .check {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        /* RIGHT SIDE */
+
+        .login-section {
+            width: 50%;
+            padding: 65px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-header {
+            margin-bottom: 32px;
+        }
+
+        .login-header h2 {
+            color: #172033;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #273449;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a96a8;
+            font-size: 17px;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #dbe2ea;
+            border-radius: 10px;
+            padding: 0 15px 0 45px;
+            font-size: 14px;
+            color: #1f2937;
+            outline: none;
+            transition: 0.2s;
+            background: #fbfcfe;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.2s;
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.20);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 11px 22px rgba(37, 99, 235, 0.28);
+        }
+
+        .error-message {
+            background: #fff1f2;
+            color: #dc2626;
+            border: 1px solid #fecdd3;
+            border-radius: 8px;
+            padding: 11px 13px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 28px;
+            color: #9aa4b2;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .login-wrapper {
+                width: 100%;
+                max-width: 480px;
+            }
+
+            .welcome-section {
+                display: none;
+            }
+
+            .login-section {
+                width: 100%;
+                padding: 50px 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+    <!-- LEFT SIDE -->
+    <div class="welcome-section">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                💼
+            </div>
+
+            <h1>WageTrack</h1>
+
+            <p>Smart Worker Wage Management</p>
+
+        </div>
+
+        <div class="welcome-content">
+
+            <h2>
+                Manage work.<br>
+                Track wages. Stay organized.
+            </h2>
+
+            <p>
+                A simple and efficient platform to manage workers,
+                worksites, attendance and wage payments in one place.
+            </p>
+
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <div class="check">✓</div>
+                <span>Worker & Worksite Management</span>
+            </div>
+
+            <div class="feature">
+                <div class="check">✓</div>
+                <span>Attendance Tracking</span>
+            </div>
+
+            <div class="feature">
+                <div class="check">✓</div>
+                <span>Wage & Payment Management</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="login-section">
+
+        <div class="login-header">
+
+            <h2>Welcome back</h2>
+
+            <p>
+                Sign in to continue to your WageTrack dashboard.
+            </p>
+
+        </div>
+
+
+        <!-- Error message from Spring Boot -->
+        <div th:if="${error}" class="error-message">
+            <span th:text="${error}"></span>
+        </div>
+
+
+        <!-- LOGIN FORM -->
+        <form action="/login" method="post" autocomplete="off">
+
+            <div class="form-group">
+
+                <label for="loginUsername">
+                    Username
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">👤</span>
+
+                    <input
+                        type="text"
+                        id="loginUsername"
+                        name="username"
+                        placeholder="Enter your username"
+                        autocomplete="new-username"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">🔒</span>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                        required>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="login-btn">
+                Sign In
+            </button>
+
+        </form>
+
+
+        <div class="login-footer">
+            © 2026 WageTrack · Worker Wage Management System
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
